@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { registerHandler, loginHandler } = require('../controller/admin');
+const { registerHandler, loginHandler, approveLogin } = require('../controller/admin');
 const { createCategory, deleteCategory, getAllCategories, updateCategory } = require('../controller/category');
 const { validateLogin } = require('../middleware/validation');
 const { upload } = require('../middleware/upload')
@@ -39,6 +39,26 @@ router.post("/admin/register", registerHandler);
  */
 
 router.post("/admin/login", loginHandler);
+
+/**
+ * @swagger
+ * /admin/validate:
+ *   get:
+ *     tags: [Admin]
+ *     summary: Validate token for admin
+ *     description: Checking the token validity.
+ *     security:
+ *       - BearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Token valid.
+ *       403:
+ *         description: Access denied.
+ *       500:
+ *         description: Server error.
+ */
+
+router.get("/admin/validate", validateLogin, approveLogin);
 
 /**
  * @swagger

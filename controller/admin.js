@@ -97,4 +97,18 @@ const loginHandler = async (req, res, next)=>{
   }
 }
 
-module.exports = {registerHandler, loginHandler}
+const approveLogin = async (req, res, next)=>{
+  try{
+    res.status(200).json({
+      status: "Success",
+      message: "Token is valid.",
+    })
+  }catch(error){
+    res.status(error.statusCode || 500).json({
+      status: "Error",
+      message: error.message
+    })
+  }
+}
+
+module.exports = {registerHandler, loginHandler, approveLogin}
