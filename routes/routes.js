@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const { registerHandler, loginHandler, approveLogin } = require('../controller/admin');
-const { createCategory, deleteCategory, getAllCategories, updateCategory } = require('../controller/category');
+const { createCategory, deleteCategory, getAllCategories, updateCategory, getSpecificCategory } = require('../controller/category');
 const { validateLogin } = require('../middleware/validation');
 const { upload } = require('../middleware/upload')
-const { createMenu, deleteMenu, getAllMenu, updateMenu } = require('../controller/menu');
+const { createMenu, deleteMenu, getAllMenu, updateMenu, getSpecificMenu } = require('../controller/menu');
 
 router.post("/admin/register", registerHandler);
 
@@ -89,6 +89,40 @@ router.get("/admin/validate", validateLogin, approveLogin);
  */
 
 router.get("/category", getAllCategories)
+
+/**
+ * @swagger
+ * /category/{id}:
+ *   get:
+ *     tags: [Category]
+ *     summary: Retrieve a specific category.
+ *     description: Get a specific category by its ID.
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *         example: 123
+ *     responses:
+ *       200:
+ *         description: Successful response with the category.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                 name:
+ *                   type: string
+ *       404:
+ *         description: Category not found
+ *       500:
+ *         description: Server error.
+ */
+
+router.get("/category/:id", getSpecificCategory)
 
 /**
  * @swagger
@@ -235,6 +269,58 @@ router.delete("/category/delete/:id", validateLogin, deleteCategory)
  */
 
 router.get('/menu', getAllMenu)
+
+/**
+ * @swagger
+ * /menu/{id}:
+ *   get:
+ *     tags: [Menu]
+ *     summary: Get a specific menu
+ *     description: Get a specific menu by its ID.
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *         example: 123
+ *     responses:
+ *       200:
+ *         description: Menu retrieved successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: integer
+ *                   name:
+ *                     type: string
+ *                   desc:
+ *                     type: string
+ *                   price:
+ *                     type: number
+ *                     format: float
+ *                   pic:
+ *                     type: string
+ *                   categoryId:
+ *                     type: integer
+ *             example:
+ *               id: 1
+ *               name: Coke
+ *               desc: "Soft drink"
+ *               price: 2.99
+ *               pic: "coke.jpg"
+ *               categoryId: 1
+ *       404:
+ *         description: Menu not found.
+ *       500:
+ *         description: Server error.
+ */
+
+router.get('/menu/:id', getSpecificMenu)
 
 /**
  * @swagger

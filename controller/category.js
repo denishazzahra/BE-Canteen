@@ -136,4 +136,26 @@ const getAllCategories = async  (req, res, next)=>{
   }
 }
 
-module.exports = {createCategory, deleteCategory, getAllCategories, updateCategory}
+const getSpecificCategory = async  (req, res, next)=>{
+  try{
+    const {id} = req.params
+    const category = await Category.findByPk(id)
+    if(!category){
+      const error = new Error("Category not found!");
+      error.statusCode = 404;
+      throw error;
+    }
+    res.status(200).json({
+			status: "Success",
+			message: "Category retrieved successfully.",
+      category
+		})
+  }catch(error){
+    res.status(error.statusCode || 500).json({
+      status: "Error",
+      message: error.message
+    })
+  }
+}
+
+module.exports = {createCategory, deleteCategory, getAllCategories, updateCategory, getSpecificCategory}

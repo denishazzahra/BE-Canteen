@@ -26,7 +26,9 @@ const fileFilter = (req, file, cb) => {
   if (mimetype && extname) {
     cb(null, true); // File valid
   } else {
-    cb(new Error('Error: Only JPEG, JPG, and PNG files are allowed!')); // File tidak valid
+    const error = new Error('Error: Only JPEG, JPG, and PNG files are allowed!')
+    error.statusCode = 400
+    cb(error); // File tidak valid
   }
 };
 

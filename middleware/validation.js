@@ -22,6 +22,16 @@ const validateLogin = (req, res, next)=>{
     next()
 
   }catch(error){
+    if (error.name === "TokenExpiredError") {
+      error.message = "Your session has expired. Please log in again.";
+      error.statusCode = 401; // Unauthorized
+    } else if (error.name === "JsonWebTokenError") {
+      error.message = "Invalid token. Please provide a valid token.";
+      error.statusCode = 403; // Forbidden
+    } else if (!error.statusCode) {
+      error.message = "An unknown error occurred during authentication.";
+      error.statusCode = 500; // Internal Server Error
+    }
     res.status(error.statusCode || 500).json({
       status: "Error",
       message: error.message

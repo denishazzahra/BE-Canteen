@@ -179,4 +179,26 @@ const updateMenu = async (req, res, next)=>{
   }
 }
 
-module.exports = {createMenu, deleteMenu, getAllMenu, updateMenu}
+const getSpecificMenu = async (req, res, next)=>{
+  try{
+    const {id} = req.params
+    const menu = await Menu.findByPk(id)
+    if(!menu){
+      const error = new Error("Menu not found!");
+      error.statusCode = 404;
+      throw error;
+    }
+    res.status(200).json({
+      status: "Success",
+      message: "Menu retrieved successfully.",
+      menu
+    })
+  }catch(error){
+    res.status(error.statusCode || 500).json({
+      status: "Error",
+      message: error.message
+    })
+  }
+}
+
+module.exports = {createMenu, deleteMenu, getAllMenu, updateMenu, getSpecificMenu}

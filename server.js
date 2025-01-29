@@ -21,16 +21,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use(routes);
 app.use((err, req, res, next) => {
-  if (err instanceof multer.MulterError) {
-    return res.status(400).json({
+  if (err ) {
+    console.log(err)
+    return res.status(err.statusCode || 500).json({
       status: "Error",
       message: err.message // Return Multer error messages as JSON
-    });
-  }
-  if (err) {
-    return res.status(500).json({
-      status: "Error",
-      message: err.message
     });
   }
   next();
