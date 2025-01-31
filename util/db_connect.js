@@ -9,6 +9,7 @@ const db_name = process.env.DB_NAME
 const sequelize = new Sequelize(db_name, db_username, db_password, {
   host: db_host,
   dialect: 'mysql',
+  dialectModule: require('mysql2'),
 });
 
 module.exports = sequelize
