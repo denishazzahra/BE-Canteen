@@ -7,36 +7,36 @@ const jwt = require('jsonwebtoken');
 const {nanoid} = require('nanoid');
 const key = process.env.TOKEN_SECRET_KEY;
 
-const registerHandler = async (req, res, next)=>{
-  try{
-    // take all user inputs
-    const {
-      fullName, email, username, password
-    } = req.body;
+// const registerHandler = async (req, res, next)=>{
+//   try{
+//     // take all user inputs
+//     const {
+//       fullName, email, username, password
+//     } = req.body;
 
-    // hash password
-    const hashedPassword = await bcrypt.hash(password, 5);
+//     // hash password
+//     const hashedPassword = await bcrypt.hash(password, 5);
     
-    // create new account
-    await Admin.create({
-      id: nanoid(16),
-      fullName: encryptText(fullName),
-      email: encryptText(email),
-      username: encryptText(username),
-      password : hashedPassword,
-    });
+//     // create new account
+//     await Admin.create({
+//       id: nanoid(16),
+//       fullName: encryptText(fullName),
+//       email: encryptText(email),
+//       username: encryptText(username),
+//       password : hashedPassword,
+//     });
 
-    res.status(201).json({
-      status: "Success",
-      message: "Account registered successfully.",
-    })
-  }catch(error){
-    res.status(error.statusCode || 500).json({
-      status: "Error",
-      message: error.message
-    })
-  }
-}
+//     res.status(201).json({
+//       status: "Success",
+//       message: "Account registered successfully.",
+//     })
+//   }catch(error){
+//     res.status(error.statusCode || 500).json({
+//       status: "Error",
+//       message: error.message
+//     })
+//   }
+// }
 
 const loginHandler = async (req, res, next)=>{
   try{
@@ -111,4 +111,4 @@ const approveLogin = async (req, res, next)=>{
   }
 }
 
-module.exports = {registerHandler, loginHandler, approveLogin}
+module.exports = {loginHandler, approveLogin}

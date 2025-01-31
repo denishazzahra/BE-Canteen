@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const { registerHandler, loginHandler, approveLogin } = require('../controller/admin');
+const { loginHandler, approveLogin } = require('../controller/admin');
 const { createCategory, deleteCategory, getAllCategories, updateCategory, getSpecificCategory } = require('../controller/category');
 const { validateLogin } = require('../middleware/validation');
 const { upload } = require('../middleware/upload')
 const { createMenu, deleteMenu, getAllMenu, updateMenu, getSpecificMenu } = require('../controller/menu');
 
-router.post("/admin/register", registerHandler);
+// router.post("/admin/register", registerHandler);
 
 /**
  * @swagger

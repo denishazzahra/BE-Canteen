@@ -39,7 +39,7 @@ app.get("/", (req,res,next)=>{
 })
 
 association().then(()=>{
-  app.listen(port);
+  app.listen(port,'0.0.0.0');
   console.log('connected to db')
 }).catch(e=>{
   console.log(e);
