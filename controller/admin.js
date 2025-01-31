@@ -4,7 +4,7 @@ const {encryptText, decryptText} = require('../util/encryption')
 const {Op} = require('sequelize');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const {nanoid} = require('nanoid');
+// const {nanoid} = require('nanoid');
 const key = process.env.TOKEN_SECRET_KEY;
 
 // const registerHandler = async (req, res, next)=>{
